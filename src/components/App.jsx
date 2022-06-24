@@ -1,36 +1,16 @@
-import logo from './logo.svg';
-import './index.css';
+// import logo from './logo.svg';
+import '../index.css';
+import Footer from './Footer';
+import Header from './Header';
+import Main from './Main';
 
 function App() {
   return (
     <div className="App">
       <div className="page">
-        <header className="header">
-          <div className="header__logo"></div>
-        </header>
-        <main className="content">
-          <section className="profile">
-            <div className="profile__avatar-container">
-              <button type="button" className="profile__avatar-edit-button" aria-label="Кнопка изменения аватара"></button>
-              <img className="profile__avatar" src="<%=require('./images/avatar_kusto.jpg')%>" alt="Аватар"/>
-            </div>
-            <div className="profile__info">
-              <div className="profile__name-wrap">
-                <h1 className="profile__name">Жак-Ив Кусто</h1>
-                <button type="button" className="profile__edit-button" aria-label="Кнопка редактирования профиля"></button>
-              </div>
-              <p className="profile__position">Исследователь океана</p>
-            </div>
-            <button type="button" className="profile__add-button" aria-label="Кнопка добавления фотографии"></button>
-          </section>
-          <section className="cards">
-            <ul className="cards__container">
-            </ul>
-          </section>
-        </main>
-        <footer className="footer">
-          <p className="footer__copyright">&copy; 2022 Mesto Russia</p>
-        </footer>
+        <Header />
+        <Main />
+        <Footer />
         <div className="popup popup_type_edit">
           <div className="popup__container">
             <button type="button" className="popup__close" aria-label="Кнопка закрытия окна редактирования профиля"></button>
@@ -106,7 +86,7 @@ function App() {
           <div className="popup__container_type_image popup__container">
             <button type="button" className="popup__close_type_image popup__close" aria-label="Кнопка закрытия окна просмотра фотографии"></button>
             <img className="popup__photo" src="#" alt=""/>
-            <h2 className="popup__caption"></h2>
+            <h2 className="popup__caption">Название места</h2>
           </div>
         </div>
         <div className="popup popup_type_confirm">
