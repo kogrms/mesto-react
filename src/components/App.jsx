@@ -3,6 +3,7 @@ import '../index.css';
 import Footer from './Footer';
 import Header from './Header';
 import Main from './Main';
+import PopupWithForm from './PopupWithForm';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Header />
         <Main />
         <Footer />
+        <PopupWithForm />
         <div className="popup popup_type_edit">
           <div className="popup__container">
             <button type="button" className="popup__close" aria-label="Кнопка закрытия окна редактирования профиля"></button>
