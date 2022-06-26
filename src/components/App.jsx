@@ -1,3 +1,4 @@
+import React from 'react';
 // import logo from './logo.svg';
 import '../index.css';
 import Footer from './Footer';
@@ -8,25 +9,39 @@ import PopupWithForm from './PopupWithForm';
 
 function App() {
 
+  const [isEditProfilePopupOpen, setEditPopupState] = React.useState(false);
+  const [isAddPlacePopupOpen, setAddPopupState] = React.useState(false);
+  const [isEditAvatarPopupOpen, setAvatarPopupState] = React.useState(false);
+
+  function handleEditProfileClick() {
+    setEditPopupState(true);
+  }
+  function handleAddPlaceClick() {
+    setAddPopupState(true);
+  }
+  function handleEditAvatarClick() {
+    setAvatarPopupState(true);
+  }
+
   return (
     <div className="App">
       <div className="page">
         <Header />
         <Main 
-        onEditProfile = {1}
-        onAddPlace = {2}
-        onEditAvatar = {3}
+          onEditProfile = {handleEditProfileClick}
+          onAddPlace = {handleAddPlaceClick}
+          onEditAvatar = {handleEditAvatarClick}
         />
         <Footer />
-        <PopupWithForm name='edit' title='Редактировать профиль' isOpen={isPopupEditOpen}>
+        <PopupWithForm name='edit' title='Редактировать профиль' isOpen={isEditProfilePopupOpen}>
           <input
             id="name"
             type="text"
             name="name"
             className="form__input form__input_value_name"
-            autocomplete="off"
-            minlength="2"
-            maxlength="40"
+            autoComplete="off"
+            minLength="2"
+            maxLength="40"
             required
             value=""
             placeholder="Имя"
@@ -37,9 +52,9 @@ function App() {
             type="text"
             name="position"
             className="form__input form__input_value_position"
-            autocomplete="off"
-            minlength="2"
-            maxlength="200"
+            autoComplete="off"
+            minLength="2"
+            maxLength="200"
             required
             value=""
             placeholder="О себе"
@@ -49,15 +64,15 @@ function App() {
             Сохранить
           </button>
         </PopupWithForm>
-        <PopupWithForm name='add' title='Новое место' isOpen={false}>
+        <PopupWithForm name='add' title='Новое место' isOpen={isAddPlacePopupOpen}>
           <input
             id="place"
             type="text"
             name="place"
             className="form__input form__input_value_place"
-            autocomplete="off"
-            minlength="2"
-            maxlength="30"
+            autoComplete="off"
+            minLength="2"
+            maxLength="30"
             required
             value=""
             placeholder="Название"
@@ -68,7 +83,7 @@ function App() {
             type="url"
             name="link"
             className="form__input form__input_value_link"
-            autocomplete="off"
+            autoComplete="off"
             required
             value=""
             placeholder="Ссылка на картинку"
@@ -78,18 +93,18 @@ function App() {
             Создать
           </button>
         </PopupWithForm>
-        <PopupWithForm name='confirm' title='Вы уверены?' isOpen={false}>
+        <PopupWithForm name='confirm' title='Вы уверены?'>
           <button type="submit" className="form__submit-button" aria-label="Кнопка подтверждения удаления фото">
             Да
           </button>
         </PopupWithForm>
-        <PopupWithForm name='avatar' title='Обновить аватар' isOpen={false}>
+        <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isEditAvatarPopupOpen}>
           <input
             id="avatar-link"
             type="url"
             name="link"
             className="form__input form__input_value_link"
-            autocomplete="off"
+            autoComplete="off"
             required
             value=""
             placeholder="Ссылка на картинку"
