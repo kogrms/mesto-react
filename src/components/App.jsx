@@ -23,6 +23,12 @@ function App() {
     setAvatarPopupState(true);
   }
 
+  function closeAllPopups() {
+    setEditPopupState(false);
+    setAddPopupState(false);
+    setAvatarPopupState(false);
+  }
+
   return (
     <div className="App">
       <div className="page">
@@ -33,7 +39,12 @@ function App() {
           onEditAvatar = {handleEditAvatarClick}
         />
         <Footer />
-        <PopupWithForm name='edit' title='Редактировать профиль' isOpen={isEditProfilePopupOpen}>
+        <PopupWithForm 
+          name='edit' 
+          title='Редактировать профиль' 
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          > 
           <input
             id="name"
             type="text"
@@ -64,7 +75,12 @@ function App() {
             Сохранить
           </button>
         </PopupWithForm>
-        <PopupWithForm name='add' title='Новое место' isOpen={isAddPlacePopupOpen}>
+        <PopupWithForm 
+          name='add' 
+          title='Новое место' 
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          >
           <input
             id="place"
             type="text"
@@ -93,12 +109,20 @@ function App() {
             Создать
           </button>
         </PopupWithForm>
-        <PopupWithForm name='confirm' title='Вы уверены?'>
+        <PopupWithForm 
+          name='confirm' 
+          title='Вы уверены?'
+          >
           <button type="submit" className="form__submit-button" aria-label="Кнопка подтверждения удаления фото">
             Да
           </button>
         </PopupWithForm>
-        <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isEditAvatarPopupOpen}>
+        <PopupWithForm 
+          name='avatar' 
+          title='Обновить аватар' 
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          >
           <input
             id="avatar-link"
             type="url"

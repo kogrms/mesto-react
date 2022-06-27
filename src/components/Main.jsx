@@ -7,11 +7,9 @@ function Main(props) {
   // const handleEditAvatarClick = () => {
   //   document.querySelector('.popup_type_avatar').classList.add('popup_opened');
   // };
-
   // const handleEditProfileClick = () => {
   //   document.querySelector('.popup_type_edit').classList.add('popup_opened');
   // };
-
   // const handleAddPlaceClick = () => {
   //   document.querySelector('.popup_type_add').classList.add('popup_opened');
   // }
