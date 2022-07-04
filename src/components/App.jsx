@@ -1,5 +1,5 @@
-import React from 'react';
-// import logo from './logo.svg';
+// import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../index.css';
 import Footer from './Footer';
 import Header from './Header';
@@ -9,9 +9,9 @@ import PopupWithForm from './PopupWithForm';
 
 function App() {
 
-  const [isEditProfilePopupOpen, setEditPopupState] = React.useState(false);
-  const [isAddPlacePopupOpen, setAddPopupState] = React.useState(false);
-  const [isEditAvatarPopupOpen, setAvatarPopupState] = React.useState(false);
+  const [isEditProfilePopupOpen, setEditPopupState] = useState(false);
+  const [isAddPlacePopupOpen, setAddPopupState] = useState(false);
+  const [isEditAvatarPopupOpen, setAvatarPopupState] = useState(false);
 
   function handleEditProfileClick() {
     setEditPopupState(true);

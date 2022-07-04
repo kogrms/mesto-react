@@ -1,6 +1,3 @@
-// import logo from './logo.svg';
-// import '../index.css';
-
 function Footer() {
   return (
     <footer className="footer">
