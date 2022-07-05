@@ -1,43 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import avatarPath from '../images/avatar_kusto.jpg';
+// import avatarPath from '../images/avatar_kusto.jpg';
 import api from '../utils/api.js';
+import Card from './Card';
 
-function Main(props) {
+function Main( {onEditAvatar, onEditProfile, onAddPlace, onCardClick} ) {
   
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
-  
-    // Promise.all([api.getUserInfo(), api.getInitialCard()])
-  // .then(([data, cards]) => {
-  //   // console.log(data);
-  //   userInfo.setUserAvatar(data.avatar);
-  //   userInfo.setUserInfo(data.name, data.about);
-  //   cardList.renderItems(cards.reverse());
-  // })
-  // .catch(err => {
-  //   console.log(err);
-  // });
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    // function handleMouseMove(event) {
-    //   setPosition({
-    //     top: event.pageY,
-    //     left: event.pageX,
-    //   });
-    // }
-
-        // Список действий внутри одного хука
-    // document.addEventListener('mousemove', handleMouseMove);
-    // document.body.classList.add('no-cursor');
-
-        // Возвращаем функцию, которая удаляет эффекты
-    // return () => {
-    //   document.body.classList.remove('no-cursor');
-    //   document.removeEventListener('mousemove', handleMouseMove);
-    // };
-
-
     api.getUserInfo()
     .then((data) => {
       console.log(data);
@@ -49,32 +22,44 @@ function Main(props) {
       console.log(err);
     });
 
-    // setUserAvatar = (data) => {
-    //   avatarPath = data.avatar;
-    // };
-    // avatarPath = userAvatar;
-
-  });
+    api.getInitialCards()
+      .then((data) => {
+        console.log(data);
+        setCards(
+          data.map(item => ({
+            id: item._id,
+            link: item.link,
+            title: item.name,
+						likes: item.likes.length,
+          }))
+        );
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
   
-
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
-          <button onClick={props.onEditAvatar} type="button" className="profile__avatar-edit-button" aria-label="Кнопка изменения аватара"></button>
+          <button onClick={onEditAvatar} type="button" className="profile__avatar-edit-button" aria-label="Кнопка изменения аватара"></button>
           <img className="profile__avatar" src={userAvatar} alt="Аватар"/>
         </div>
         <div className="profile__info">
           <div className="profile__name-wrap">
             <h1 className="profile__name">{userName}</h1>
-            <button onClick={props.onEditProfile} type="button" className="profile__edit-button" aria-label="Кнопка редактирования профиля"></button>
+            <button onClick={onEditProfile} type="button" className="profile__edit-button" aria-label="Кнопка редактирования профиля"></button>
           </div>
           <p className="profile__position">{userDescription}</p>
         </div>
-        <button onClick={props.onAddPlace} type="button" className="profile__add-button" aria-label="Кнопка добавления фотографии"></button>
+        <button onClick={onAddPlace} type="button" className="profile__add-button" aria-label="Кнопка добавления фотографии"></button>
       </section>
       <section className="cards">
         <ul className="cards__container">
+          {cards.map((card) => (
+            <Card key={card.id} onCardClick={onCardClick} card={card} />
+          ))}
         </ul>
       </section>
     </main>

@@ -21,7 +21,7 @@ class Api {
     .then(this._handleResponse)
   };
 
-  getInitialCard() {
+  getInitialCards() {
     return fetch(`${this.link}/cards`, {
       method: "GET",
       headers: this.headers
