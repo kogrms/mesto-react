@@ -1,39 +1,38 @@
-import React, { useState} from 'react';
-import '../index.css';
-import Footer from './Footer';
-import Header from './Header';
-import ImagePopup from './ImagePopup';
-import Main from './Main';
-import PopupWithForm from './PopupWithForm';
+import React, { useState } from "react";
+import "../index.css";
+import Footer from "./Footer";
+import Header from "./Header";
+import ImagePopup from "./ImagePopup";
+import Main from "./Main";
+import PopupWithForm from "./PopupWithForm";
 
 function App() {
-
-  const [isEditProfilePopupOpen, setEditPopupState] = useState(false);
-  const [isAddPlacePopupOpen, setAddPopupState] = useState(false);
-  const [isEditAvatarPopupOpen, setAvatarPopupState] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
 
   function handleEditProfileClick() {
-    setEditPopupState(true);
+    setIsEditProfilePopupOpen(true);
   }
   function handleAddPlaceClick() {
-    setAddPopupState(true);
+    setIsAddPlacePopupOpen(true);
   }
   function handleEditAvatarClick() {
-    setAvatarPopupState(true);
+    setIsEditAvatarPopupOpen(true);
   }
   function handleCardClick(card) {
-    setSelectedCard({ 
+    setSelectedCard({
       isOpen: true,
-      ...card
+      ...card,
     });
   }
 
   function closeAllPopups(e) {
     e.preventDefault();
-    setEditPopupState(false);
-    setAddPopupState(false);
-    setAvatarPopupState(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
     setSelectedCard({});
   }
 
@@ -41,19 +40,19 @@ function App() {
     <div className="App">
       <div className="page">
         <Header />
-        <Main 
-          onEditProfile = {handleEditProfileClick}
-          onAddPlace = {handleAddPlaceClick}
-          onEditAvatar = {handleEditAvatarClick}
-          onCardClick = {handleCardClick}
+        <Main
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+          onEditAvatar={handleEditAvatarClick}
+          onCardClick={handleCardClick}
         />
         <Footer />
-        <PopupWithForm 
-          name = 'edit' 
-          title = 'Редактировать профиль' 
-          isOpen = {isEditProfilePopupOpen}
-          onClose = {closeAllPopups}
-          > 
+        <PopupWithForm
+          name="edit"
+          title="Редактировать профиль"
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+        >
           <input
             id="name"
             type="text"
@@ -63,7 +62,6 @@ function App() {
             minLength="2"
             maxLength="40"
             required
-            value=""
             placeholder="Имя"
           />
           <span id="name-error" className="form__input-error"></span>
@@ -76,20 +74,23 @@ function App() {
             minLength="2"
             maxLength="200"
             required
-            value=""
             placeholder="О себе"
           />
           <span id="position-error" className="form__input-error"></span>
-          <button type="submit" className="form__submit-button" aria-label="Кнопка сохранения изменений профиля">
+          <button
+            type="submit"
+            className="form__submit-button"
+            aria-label="Кнопка сохранения изменений профиля"
+          >
             Сохранить
           </button>
         </PopupWithForm>
-        <PopupWithForm 
-          name = 'add' 
-          title = 'Новое место' 
-          isOpen = {isAddPlacePopupOpen}
-          onClose = {closeAllPopups}
-          >
+        <PopupWithForm
+          name="add"
+          title="Новое место"
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+        >
           <input
             id="place"
             type="text"
@@ -99,7 +100,6 @@ function App() {
             minLength="2"
             maxLength="30"
             required
-            value=""
             placeholder="Название"
           />
           <span id="place-error" className="form__input-error"></span>
@@ -110,28 +110,32 @@ function App() {
             className="form__input form__input_value_link"
             autoComplete="off"
             required
-            value=""
             placeholder="Ссылка на картинку"
           />
           <span id="card-link-error" className="form__input-error"></span>
-          <button type="submit" className="form__submit-button" aria-label="Кнопка сохранения новой фотографии">
+          <button
+            type="submit"
+            className="form__submit-button"
+            aria-label="Кнопка сохранения новой фотографии"
+          >
             Создать
           </button>
         </PopupWithForm>
-        <PopupWithForm 
-          name = 'confirm' 
-          title = 'Вы уверены?'
+        <PopupWithForm name="confirm" title="Вы уверены?">
+          <button
+            type="submit"
+            className="form__submit-button"
+            aria-label="Кнопка подтверждения удаления фото"
           >
-          <button type="submit" className="form__submit-button" aria-label="Кнопка подтверждения удаления фото">
             Да
           </button>
         </PopupWithForm>
-        <PopupWithForm 
-          name = 'avatar' 
-          title = 'Обновить аватар' 
-          isOpen = {isEditAvatarPopupOpen}
-          onClose = {closeAllPopups}
-          >
+        <PopupWithForm
+          name="avatar"
+          title="Обновить аватар"
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+        >
           <input
             id="avatar-link"
             type="url"
@@ -139,18 +143,18 @@ function App() {
             className="form__input form__input_value_link"
             autoComplete="off"
             required
-            value=""
             placeholder="Ссылка на картинку"
           />
           <span id="avatar-link-error" className="form__input-error"></span>
-          <button type="submit" className="form__submit-button" aria-label="Кнопка сохранения нового аватара">
+          <button
+            type="submit"
+            className="form__submit-button"
+            aria-label="Кнопка сохранения нового аватара"
+          >
             Сохранить
           </button>
         </PopupWithForm>
-        <ImagePopup
-          card = {selectedCard}
-          onClose = {closeAllPopups}
-        />
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
     </div>
   );
