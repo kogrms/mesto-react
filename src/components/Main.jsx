@@ -1,25 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import api from "../utils/api.js";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
   const [cards, setCards] = useState([]);
+  const { avatar, name, about } = useContext(CurrentUserContext);
 
   useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([data, cards]) => {
-        setUserAvatar(data.avatar);
-        setUserName(data.name);
-        setUserDescription(data.about);
+    api
+      .getInitialCards()
+      .then((cards) => {
+        // console.log(cards);
         setCards(
           cards.map((item) => ({
             id: item._id,
             link: item.link,
             title: item.name,
-            likes: item.likes.length,
+            likes: item.likes,
+            owner: item.owner,
           }))
         );
       })
@@ -42,11 +41,11 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
             className="profile__avatar-edit-button"
             aria-label="Кнопка изменения аватара"
           ></button>
-          <img className="profile__avatar" src={userAvatar} alt="Аватар" />
+          <img className="profile__avatar" src={avatar} alt="Аватар" />
         </div>
         <div className="profile__info">
           <div className="profile__name-wrap">
-            <h1 className="profile__name">{userName}</h1>
+            <h1 className="profile__name">{name}</h1>
             <button
               onClick={onEditProfile}
               type="button"
@@ -54,7 +53,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
               aria-label="Кнопка редактирования профиля"
             ></button>
           </div>
-          <p className="profile__position">{userDescription}</p>
+          <p className="profile__position">{about}</p>
         </div>
         <button
           onClick={onAddPlace}

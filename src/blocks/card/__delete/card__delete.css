@@ -17,5 +17,9 @@
 }
 
 .card__delete:hover {
-  opacity: .6;
+  opacity: 0.6;
+}
+
+.card__delete_hidden {
+  display: none;
 }
