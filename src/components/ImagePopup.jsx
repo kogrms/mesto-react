@@ -8,8 +8,8 @@ function ImagePopup({ card, onClose }) {
           className="popup__close_type_image popup__close"
           aria-label="Кнопка закрытия окна просмотра фотографии"
         ></button>
-        <img className="popup__photo" src={card.link} alt={card.title} />
-        <h2 className="popup__caption">{card.title}</h2>
+        <img className="popup__photo" src={card.link} alt={card.name} />
+        <h2 className="popup__caption">{card.name}</h2>
       </div>
     </div>
   );

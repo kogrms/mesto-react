@@ -69,9 +69,9 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  like(id) {
+  changeLikeCardStatus(id, like) {
     return fetch(`${this.link}/cards/${id}/likes`, {
-      method: "PUT",
+      method: like ? "PUT" : "DELETE",
       headers: this.headers,
       body: JSON.stringify({
         _id: `${id}`,
@@ -79,15 +79,25 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  dislike(id) {
-    return fetch(`${this.link}/cards/${id}/likes`, {
-      method: "DELETE",
-      headers: this.headers,
-      body: JSON.stringify({
-        _id: `${id}`,
-      }),
-    }).then(this._handleResponse);
-  }
+  // like(id) {
+  //   return fetch(`${this.link}/cards/${id}/likes`, {
+  //     method: "PUT",
+  //     headers: this.headers,
+  //     body: JSON.stringify({
+  //       _id: `${id}`,
+  //     }),
+  //   }).then(this._handleResponse);
+  // }
+
+  // dislike(id) {
+  //   return fetch(`${this.link}/cards/${id}/likes`, {
+  //     method: "DELETE",
+  //     headers: this.headers,
+  //     body: JSON.stringify({
+  //       _id: `${id}`,
+  //     }),
+  //   }).then(this._handleResponse);
+  // }
 }
 
 const api = new Api(myId);
