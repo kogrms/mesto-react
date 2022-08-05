@@ -1,66 +1,26 @@
-import React, { useState, useEffect, useContext } from "react";
-import api from "../utils/api.js";
+import React, { useContext } from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
-  const [cards, setCards] = useState([]);
-  // const { avatar, name, about, _id } = useContext(CurrentUserContext);
+function Main({
+  onEditAvatar,
+  onEditProfile,
+  onAddPlace,
+  onCardClick,
+  cards,
+  onCardLike,
+  onCardDelete,
+}) {
   const currentUser = useContext(CurrentUserContext);
-
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        // console.log(cards);
-        setCards(
-          cards.map((item) => ({
-            _id: item._id,
-            link: item.link,
-            name: item.name,
-            likes: item.likes,
-            owner: item.owner,
-          }))
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   const cardsElements = cards.map((card) => (
     <Card
       key={card._id}
       onCardClick={onCardClick}
       card={card}
-      onCardLike={handleCardLike}
-      onCardDelete={handleCardDelete}
+      onCardLike={onCardLike}
+      onCardDelete={onCardDelete}
     />
   ));
-
-  function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api
-      .changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function handleCardDelete(card, e) {
-    // setLoading(true);
-    api
-      .deleteCard(card._id)
-      .then(setCards((state) => state.filter((c) => c._id !== card._id)))
-      // .then(() => closeAllPopups(e))
-      .catch((err) => console.log(err));
-    // .finally(() => setLoading(false));
-  }
 
   return (
     <main className="content">

@@ -27,17 +27,6 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  // setUserInfo(name, about) {
-  //   return fetch(`${this.link}/users/me`, {
-  //     method: "PATCH",
-  //     headers: this.headers,
-  //     body: JSON.stringify({
-  //       name: `${name}`,
-  //       about: `${about}`,
-  //     }),
-  //   }).then(this._handleResponse);
-  // }
-
   setUserInfo(newUserData) {
     return fetch(`${this.link}/users/me`, {
       method: "PATCH",
@@ -46,13 +35,24 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  addNewCard(name, link) {
+  // addNewCard(name, link) {
+  //   return fetch(`${this.link}/cards`, {
+  //     method: "POST",
+  //     headers: this.headers,
+  //     body: JSON.stringify({
+  //       name: `${name}`,
+  //       link: `${link}`,
+  //     }),
+  //   }).then(this._handleResponse);
+  // }
+
+  addNewCard(newCard) {
     return fetch(`${this.link}/cards`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
-        name: `${name}`,
-        link: `${link}`,
+        name: `${newCard.name}`,
+        link: `${newCard.link}`,
       }),
     }).then(this._handleResponse);
   }
@@ -61,9 +61,6 @@ class Api {
     return fetch(`${this.link}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
-      // body: JSON.stringify({
-      //   avatar: `${link}`,
-      // }),
       body: JSON.stringify(link),
     }).then(this._handleResponse);
   }
@@ -87,26 +84,6 @@ class Api {
       }),
     }).then(this._handleResponse);
   }
-
-  // like(id) {
-  //   return fetch(`${this.link}/cards/${id}/likes`, {
-  //     method: "PUT",
-  //     headers: this.headers,
-  //     body: JSON.stringify({
-  //       _id: `${id}`,
-  //     }),
-  //   }).then(this._handleResponse);
-  // }
-
-  // dislike(id) {
-  //   return fetch(`${this.link}/cards/${id}/likes`, {
-  //     method: "DELETE",
-  //     headers: this.headers,
-  //     body: JSON.stringify({
-  //       _id: `${id}`,
-  //     }),
-  //   }).then(this._handleResponse);
-  // }
 }
 
 const api = new Api(myId);

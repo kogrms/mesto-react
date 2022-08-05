@@ -7,6 +7,7 @@ import Main from "./Main";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 import PopupWithForm from "./PopupWithForm";
 import api from "../utils/api.js";
 
@@ -16,16 +17,17 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     api
       .getUserInfo()
       .then((user) => setCurrentUser(user))
       .catch((err) => console.log(err));
-    // api
-    //   .getInitialCard()
-    //   .then((cards) => setCards(cards))
-    //   .catch((err) => console.log(err));
+    api
+      .getInitialCards()
+      .then((cards) => setCards(cards))
+      .catch((err) => console.log(err));
   }, []);
 
   function handleEditProfileClick() {
@@ -44,6 +46,30 @@ function App() {
     });
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleCardDelete(card, e) {
+    // setLoading(true);
+    api
+      .deleteCard(card._id)
+      .then(setCards((state) => state.filter((c) => c._id !== card._id)))
+      // .then(() => closeAllPopups(e))
+      .catch((err) => console.log(err));
+    // .finally(() => setLoading(false));
+  }
+
   function handleUpdateUser(newUserData) {
     api
       .setUserInfo(newUserData)
@@ -53,21 +79,26 @@ function App() {
       })
       .catch((err) => console.log(err));
     // .finally(() => setLoading(false));
-    // console.log(newUserData);
-    // console.log(currentUser);
   }
 
   function handleUpdateAvatar(newAvatar) {
     api
       .addNewAvatar(newAvatar)
       .then((res) => {
-        // console.log(res);
         setCurrentUser(res);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
-    // console.log(newAvatar);
-    // console.log(currentUser);
+  }
+
+  function handleAddPlaceSubmit(newCard) {
+    api
+      .addNewCard(newCard)
+      .then((res) => {
+        setCards([res, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
   }
 
   function closeAllPopups() {
@@ -88,6 +119,9 @@ function App() {
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
             onCardClick={handleCardClick}
+            cards={cards}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
           />
           <Footer />
           <EditProfilePopup
@@ -95,42 +129,16 @@ function App() {
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
           />
-          <PopupWithForm
-            name="add"
-            title="Новое место"
+          <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
-          >
-            <input
-              id="place"
-              type="text"
-              name="place"
-              className="form__input form__input_value_place"
-              autoComplete="off"
-              minLength="2"
-              maxLength="30"
-              required
-              placeholder="Название"
-            />
-            <span id="place-error" className="form__input-error"></span>
-            <input
-              id="card-link"
-              type="url"
-              name="link"
-              className="form__input form__input_value_link"
-              autoComplete="off"
-              required
-              placeholder="Ссылка на картинку"
-            />
-            <span id="card-link-error" className="form__input-error"></span>
-            <button
-              type="submit"
-              className="form__submit-button"
-              aria-label="Кнопка сохранения новой фотографии"
-            >
-              Создать
-            </button>
-          </PopupWithForm>
+            onAddPlace={handleAddPlaceSubmit}
+          />
+          <EditAvatarPopup
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            onUpdateAvatar={handleUpdateAvatar}
+          />
           <PopupWithForm name="confirm" title="Вы уверены?">
             <button
               type="submit"
@@ -140,11 +148,6 @@ function App() {
               Да
             </button>
           </PopupWithForm>
-          <EditAvatarPopup
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar}
-          />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </div>
       </div>
