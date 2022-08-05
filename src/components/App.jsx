@@ -3,9 +3,10 @@ import "../index.css";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Footer from "./Footer";
 import Header from "./Header";
+import Main from "./Main";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
-import Main from "./Main";
+import EditAvatarPopup from "./EditAvatarPopup";
 import PopupWithForm from "./PopupWithForm";
 import api from "../utils/api.js";
 
@@ -53,6 +54,19 @@ function App() {
       .catch((err) => console.log(err));
     // .finally(() => setLoading(false));
     // console.log(newUserData);
+    // console.log(currentUser);
+  }
+
+  function handleUpdateAvatar(newAvatar) {
+    api
+      .addNewAvatar(newAvatar)
+      .then((res) => {
+        // console.log(res);
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+    // console.log(newAvatar);
     // console.log(currentUser);
   }
 
@@ -126,30 +140,11 @@ function App() {
               Да
             </button>
           </PopupWithForm>
-          <PopupWithForm
-            name="avatar"
-            title="Обновить аватар"
+          <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-          >
-            <input
-              id="avatar-link"
-              type="url"
-              name="link"
-              className="form__input form__input_value_link"
-              autoComplete="off"
-              required
-              placeholder="Ссылка на картинку"
-            />
-            <span id="avatar-link-error" className="form__input-error"></span>
-            <button
-              type="submit"
-              className="form__submit-button"
-              aria-label="Кнопка сохранения нового аватара"
-            >
-              Сохранить
-            </button>
-          </PopupWithForm>
+            onUpdateAvatar={handleUpdateAvatar}
+          />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </div>
       </div>
