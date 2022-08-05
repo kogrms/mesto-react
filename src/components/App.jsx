@@ -4,6 +4,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Footer from "./Footer";
 import Header from "./Header";
 import ImagePopup from "./ImagePopup";
+import EditProfilePopup from "./EditProfilePopup";
 import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 import api from "../utils/api.js";
@@ -42,8 +43,21 @@ function App() {
     });
   }
 
-  function closeAllPopups(e) {
-    e.preventDefault();
+  function handleUpdateUser(newUserData) {
+    api
+      .setUserInfo(newUserData)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+    // .finally(() => setLoading(false));
+    // console.log(newUserData);
+    // console.log(currentUser);
+  }
+
+  function closeAllPopups() {
+    // e.preventDefault();
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
@@ -62,44 +76,11 @@ function App() {
             onCardClick={handleCardClick}
           />
           <Footer />
-          <PopupWithForm
-            name="edit"
-            title="Редактировать профиль"
+          <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
-          >
-            <input
-              id="name"
-              type="text"
-              name="name"
-              className="form__input form__input_value_name"
-              autoComplete="off"
-              minLength="2"
-              maxLength="40"
-              required
-              placeholder="Имя"
-            />
-            <span id="name-error" className="form__input-error"></span>
-            <input
-              id="position"
-              type="text"
-              name="position"
-              className="form__input form__input_value_position"
-              autoComplete="off"
-              minLength="2"
-              maxLength="200"
-              required
-              placeholder="О себе"
-            />
-            <span id="position-error" className="form__input-error"></span>
-            <button
-              type="submit"
-              className="form__submit-button"
-              aria-label="Кнопка сохранения изменений профиля"
-            >
-              Сохранить
-            </button>
-          </PopupWithForm>
+            onUpdateUser={handleUpdateUser}
+          />
           <PopupWithForm
             name="add"
             title="Новое место"

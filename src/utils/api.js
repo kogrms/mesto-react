@@ -27,14 +27,22 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  setUserInfo(name, about) {
+  // setUserInfo(name, about) {
+  //   return fetch(`${this.link}/users/me`, {
+  //     method: "PATCH",
+  //     headers: this.headers,
+  //     body: JSON.stringify({
+  //       name: `${name}`,
+  //       about: `${about}`,
+  //     }),
+  //   }).then(this._handleResponse);
+  // }
+
+  setUserInfo(newUserData) {
     return fetch(`${this.link}/users/me`, {
       method: "PATCH",
       headers: this.headers,
-      body: JSON.stringify({
-        name: `${name}`,
-        about: `${about}`,
-      }),
+      body: JSON.stringify(newUserData),
     }).then(this._handleResponse);
   }
 
