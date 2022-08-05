@@ -35,17 +35,6 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  // addNewCard(name, link) {
-  //   return fetch(`${this.link}/cards`, {
-  //     method: "POST",
-  //     headers: this.headers,
-  //     body: JSON.stringify({
-  //       name: `${name}`,
-  //       link: `${link}`,
-  //     }),
-  //   }).then(this._handleResponse);
-  // }
-
   addNewCard(newCard) {
     return fetch(`${this.link}/cards`, {
       method: "POST",

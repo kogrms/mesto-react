@@ -61,13 +61,10 @@ function App() {
   }
 
   function handleCardDelete(card, e) {
-    // setLoading(true);
     api
       .deleteCard(card._id)
       .then(setCards((state) => state.filter((c) => c._id !== card._id)))
-      // .then(() => closeAllPopups(e))
       .catch((err) => console.log(err));
-    // .finally(() => setLoading(false));
   }
 
   function handleUpdateUser(newUserData) {
@@ -78,7 +75,6 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => console.log(err));
-    // .finally(() => setLoading(false));
   }
 
   function handleUpdateAvatar(newAvatar) {
@@ -102,7 +98,6 @@ function App() {
   }
 
   function closeAllPopups() {
-    // e.preventDefault();
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
