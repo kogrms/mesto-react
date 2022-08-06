@@ -33,6 +33,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText="Создать"
     >
       <input
         id="place"
@@ -60,13 +61,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         value={link}
       />
       <span id="card-link-error" className="form__input-error"></span>
-      <button
-        type="submit"
-        className="form__submit-button"
-        aria-label="Кнопка сохранения новой фотографии"
-      >
-        Создать
-      </button>
     </PopupWithForm>
   );
 }

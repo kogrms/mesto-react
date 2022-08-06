@@ -10,7 +10,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   function handleChangeName(e) {
     setName(e.target.value);
@@ -35,6 +35,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText="Сохранить"
     >
       <input
         id="name"
@@ -64,13 +65,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         placeholder="О себе"
       />
       <span id="position-error" className="form__input-error"></span>
-      <button
-        type="submit"
-        className="form__submit-button"
-        aria-label="Кнопка сохранения изменений профиля"
-      >
-        Сохранить
-      </button>
     </PopupWithForm>
   );
 }

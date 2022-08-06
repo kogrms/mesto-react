@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../index.css";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -20,14 +19,8 @@ function App() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    api
-      .getUserInfo()
-      .then((user) => setCurrentUser(user))
-      .catch((err) => console.log(err));
-    api
-      .getInitialCards()
-      .then((cards) => setCards(cards))
-      .catch((err) => console.log(err));
+    api.getUserInfo().then(setCurrentUser).catch(console.log);
+    api.getInitialCards().then(setCards).catch(console.log);
   }, []);
 
   function handleEditProfileClick() {
